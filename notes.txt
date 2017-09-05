@@ -1,0 +1,65 @@
+start an new web:
+	>>django-admin startproject myWeb(/)
+
+start an new app:
+	>>python manage.py startapp myBlog(/)
+	>In file /myWeb/settings.py,add 'myBlog' in INSTALLED_APPS
+
+configure urls:
+	>In file /myBlog/views.py,add "
+		from django.http import HttpResponse
+		def hello(request):
+			return HttpResponse('<html>helloWorld</html>') 
+	"
+	>In file /myWeb/urls.py,add "
+		from myBlog import views
+
+		url(r'^hello/$',views.hello)
+	"
+	>>python manage.py runserver(/)
+	>enter "localhost:8000/hello" in your browser
+	>A better way can be seen in my project!
+
+configure templates:
+	>>mkdir templates(/myBlog/)
+	>>mkdir myBlog(/myBlog/templates)(it's good but not necessary)
+	>>touch index.html(/myBlog/templates)
+	>In file index.html add your html code
+	>In file /myBlog/views.py modify "
+		def hello(request):
+			return render(request,'/myBlog/index.html',{'value':'This is value'})
+			#value can be used in index.html by {{value}}
+	"
+
+configure models(sql):
+	>In file /myBlog/models.py add "
+		class Article(models.Model):
+			title =  models.CharField(max_length=32,default='Title')
+			content = models.TextField(null=True)
+	"
+	>>python manage.py makemigrations myBlog(/)
+	>>python manage.py migrate(/)
+	>add some data in /db.sqlites
+	>In flie /myBlog/views.py add "
+		from . import models
+
+		def hello(request):
+			article = models.Article.objects.get(pk=1)
+			return render(request,'blog/index.html',{'article':article})#can be used in html
+	"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
