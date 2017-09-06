@@ -48,6 +48,11 @@ configure models(sql):
 			return render(request,'blog/index.html',{'article':article})#can be used in html
 	"
 
+confiure admin:
+	>In file /myBlog/admin.py add "
+		from models import Article
+		admin.site.register(Article)
+	"
 
 
 

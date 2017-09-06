@@ -2,10 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<title>MainPage</title>
 </head>
 <body>
-	<h1>{{article.title}}</h1>
-	<h3>{{article.content}}</h3>
+	<h1>Article List</h1>
+{% for article in articles %}
+	<a href="{% url 'blog:article_page' article.id%}">{{article.title}}</a>
+	<br/>
+{% endfor %}
+	<h3><a href="">new article</a></h3>
 </body>
 </html>
